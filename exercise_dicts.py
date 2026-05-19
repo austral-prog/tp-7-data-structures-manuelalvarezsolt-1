@@ -13,9 +13,10 @@ def create_inventory(items):
     Returns:
         Un diccionario con cada item y su cantidad
     """
-    pass  # Reemplazar con tu implementación
-
-
+    d = {}
+    for element in items:
+        d[element] = items.count(element)
+    return d
 def add_items(inventario, items):
     """
     Agrega una lista de items a un inventario existente. Si un item ya está
@@ -29,7 +30,13 @@ def add_items(inventario, items):
     Returns:
         El inventario actualizado
     """
-    pass  # Reemplazar con tu implementación
+    for cosas in items:
+        if cosas in inventario:
+            inventario[cosas] += 1
+        else:
+            inventario[cosas] = 1
+    return inventario
+
 
 
 def decrement_items(inventario, items):
@@ -46,8 +53,11 @@ def decrement_items(inventario, items):
     Returns:
         El inventario actualizado (sin valores negativos)
     """
-    pass  # Reemplazar con tu implementación
-
+    for cosas in items:
+        if cosas in inventario:
+            if inventario[cosas] > 0:
+                inventario[cosas] -= 1
+    return inventario
 
 def remove_item(inventario, item):
     """
@@ -61,7 +71,9 @@ def remove_item(inventario, item):
     Returns:
         El inventario actualizado (o sin cambios si el item no existe)
     """
-    pass  # Reemplazar con tu implementación
+    if item in inventario:
+        inventario.pop(item)
+    return inventario
 
 
 def list_inventory(inventario):
@@ -75,8 +87,11 @@ def list_inventory(inventario):
     Returns:
         Lista de tuplas (item, cantidad) con cantidad > 0
     """
-    pass  # Reemplazar con tu implementación
-
+    lista = []
+    for claves in inventario:
+        if inventario[claves] > 0:
+            lista.append((claves, inventario[claves]))
+    return lista
 
 def find_max_value(diccionario):
     """
@@ -93,7 +108,18 @@ def find_max_value(diccionario):
     Ejemplo:
         find_max_value({'John': 85, 'Emma': 92, 'Sophia': 78}) -> 'Emma'
     """
-    pass  # Reemplazar con tu implementación
+    lista = []
+    otralista = []
+    if diccionario == {}:
+        return ""
+    for pibardos in diccionario:
+        lista.append(diccionario[pibardos])
+        otralista.append(pibardos)
+    crack = max(lista)
+    posicion = lista.index(crack)
+    return otralista[posicion]
+
+
 
 
 def reverse_dict(diccionario):
@@ -112,8 +138,13 @@ def reverse_dict(diccionario):
         reverse_dict({'a': 1, 'b': 2, 'c': 3, 'd': 3, 'e': 2})
         -> {1: 'a', 2: 'be', 3: 'cd'}
     """
-    pass  # Reemplazar con tu implementación
-
+    nuevo = {}
+    for claves in diccionario:
+        if diccionario[claves] in nuevo:
+            nuevo[diccionario[claves]] += claves
+        else:
+            nuevo[diccionario[claves]] = claves
+    return nuevo
 
 def word_frequency(palabras):
     """
@@ -131,7 +162,10 @@ def word_frequency(palabras):
         word_frequency(["apple", "banana", "apple", "orange", "banana", "apple"])
         -> {'apple': 3, 'banana': 2, 'orange': 1}
     """
-    pass  # Reemplazar con tu implementación
+    d = {}
+    for cosas in palabras:
+        d[cosas] = palabras.count(cosas)
+    return d
 
 
 def find_biggest_expense(gastos):
@@ -149,6 +183,70 @@ def find_biggest_expense(gastos):
     Ejemplo:
         find_biggest_expense({'Food': [60, 80, 100],
                               'Transport': [10, 1, 2],
+                              'Games': [10, 20, 30]}) -> 'Food'
+    """
+    if gastos == {}:
+        return ""
+    promedios = []
+    lista = []
+    for cosas in gastos:
+        promedios.append(sum(gastos[cosas]) / len(gastos[cosas]))
+        lista.append(cosas)
+    maximo = max(promedios)
+    indexado = promedios.index(maximo)
+    return lista[indexado]
+
+
+def sum_expenses(gastos):
+    """
+    Recibe un diccionario de categorías con listas de gastos y retorna
+    un nuevo diccionario con la suma total de los gastos por categoría.
+
+    Args:
+        gastos: Diccionario {categoria: [gasto1, gasto2, ...]}
+
+    Returns:
+        Diccionario {categoria: suma_total}
+
+    Ejemplo:
+        sum_expenses({'Food': [60, 80, 100],
+                      'Transport': [10, 1, 2],
+                      'Games': [10, 20, 30]})
+        -> {'Food': 240, 'Transport': 13, 'Games': 60}
+    """
+    d = {}
+    for cosas in gastos:
+        d[cosas] = sum(gastos[cosas])
+    return d
+
+def sum_expenses_by_type(gastos):
+    """
+    Recibe un diccionario de categorías cuyos valores son listas de
+    tuplas (tipo, monto). Retorna un nuevo diccionario con la suma
+    de montos agrupada por tipo (no por categoría).
+
+    Args:
+        gastos: Diccionario {categoria: [(tipo, monto), ...]}
+
+    Returns:
+        Diccionario {tipo: suma_total_del_tipo}
+
+    Ejemplo:
+        sum_expenses_by_type({
+            'Food': [("A", 60), ("B", 100), ("A", 20)],
+            'Transport': [("A", 10), ("B", 50), ("C", 5)],
+            'Games': [("A", 6), ("B", 24), ("C", 99)]
+        })
+        -> {'A': 96, 'B': 174, 'C': 104}
+    """
+    d = {}
+    for cosas in gastos:
+        for tuplas in gastos[cosas]:
+            if tuplas[0] in d:
+                d[tuplas[0]] += tuplas[1]
+            else:
+                d[tuplas[0]] = tuplas[1]
+    return d
                               'Games': [10, 20, 30]}) -> 'Food'
     """
     pass  # Reemplazar con tu implementación
